@@ -1,22 +1,55 @@
 import { StyleSheet, Font } from "@react-pdf/renderer";
 
+// Register the font
+Font.register({
+  family: "Lato",
+  fonts: [
+    {
+      src: "/fonts/Lato/Lato-Regular.ttf",
+      fontWeight: "normal",
+      fontStyle: "normal",
+    },
+    {
+      src: "/fonts/Lato/Lato-Bold.ttf",
+      fontWeight: "bold",
+      fontStyle: "normal",
+    },
+    {
+      src: "/fonts/Lato/Lato-Italic.ttf",
+      fontWeight: "normal",
+      fontStyle: "italic",
+    },
+    {
+      src: "/fonts/Lato/Lato-BoldItalic.ttf",
+      fontWeight: "bold",
+      fontStyle: "italic",
+    },
+  ],
+});
+
 export const styles = StyleSheet.create({
   page: {
     padding: 40,
     backgroundColor: "#FFFFFF",
-    fontFamily: "Helvetica",
+    fontFamily: "Lato",
     fontSize: 11,
     lineHeight: 1.5,
     color: "#222222",
   },
-  
+
+  divider: {
+    borderBottomWidth: 0.5,
+    borderBottomColor: "#CCCCCC",
+    marginVertical: 12,
+  },
+
   // Header
   headerContainer: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 8,
     marginBottom: 20,
-    alignItems: "center", // Centered header like the source
-    borderBottomWidth: 1, // Optional: Adds a clean separation like many modern resumes
-    borderBottomColor: "#EEEEEE",
-    paddingBottom: 20,
+    alignItems: "center",
   },
   name: {
     fontSize: 22,
@@ -33,16 +66,14 @@ export const styles = StyleSheet.create({
 
   // Section General
   section: {
-    marginBottom: 15,
+    // marginBottom: 15,
   },
   sectionTitle: {
     fontSize: 12,
+    textAlign: "center",
     fontWeight: "bold",
     textTransform: "uppercase",
     marginBottom: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: "#000000",
-    paddingBottom: 2,
     letterSpacing: 0.5,
   },
 
@@ -91,7 +122,6 @@ export const styles = StyleSheet.create({
   },
   bulletRow: {
     flexDirection: "row",
-    marginBottom: 2,
   },
   bulletPoint: {
     width: 10,

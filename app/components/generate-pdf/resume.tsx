@@ -18,11 +18,8 @@ export default function Resume({ data }: { data: any }) {
         <View style={styles.headerContainer}>
           <Text style={styles.name}>{data.name}</Text>
           <Text style={styles.contactInfo}>
-            {data.email} | {data.phone}
+            {data.email} | {data.phone} | {data.website}
           </Text>
-          {data.website && (
-            <Text style={styles.contactInfo}>{data.website}</Text>
-          )}
         </View>
 
         {/* SUMMARY */}
@@ -32,6 +29,8 @@ export default function Resume({ data }: { data: any }) {
             <Text style={styles.paragraph}>{data.summary}</Text>
           </View>
         )}
+
+        <View style={styles.divider} />
 
         {/* SKILLS */}
         {data.skills && (
@@ -44,6 +43,8 @@ export default function Resume({ data }: { data: any }) {
             </Text>
           </View>
         )}
+
+        <View style={styles.divider} />
 
         {/* WORK EXPERIENCE */}
         {data.experience && (
@@ -72,6 +73,8 @@ export default function Resume({ data }: { data: any }) {
             ))}
           </View>
         )}
+
+        <View style={styles.divider} />
 
         {/* EDUCATION */}
         {data.education && (

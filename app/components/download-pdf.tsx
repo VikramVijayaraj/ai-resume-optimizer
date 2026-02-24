@@ -5,6 +5,7 @@ import { PDFViewer, PDFDownloadLink } from "@react-pdf/renderer";
 
 import Resume from "./generate-pdf/resume";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 interface Experience {
   role: string;
@@ -21,16 +22,18 @@ interface ResumeData {
 
 export default function DownloadPdf() {
   const [data, setData] = useState<ResumeData | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     // Retrieve from localStorage
-    const savedData = localStorage.getItem("resumeData");
+    const savedData = localStorage.getItem("optimizedResumeData");
 
     if (savedData) {
       setData(JSON.parse(savedData));
     } else {
       // Redirect back if no data found
       setData(null);
+      router.push("/");
     }
   }, []);
 
