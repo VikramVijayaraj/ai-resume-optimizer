@@ -4,15 +4,22 @@ import { useState } from "react";
 import { Upload } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export default function FileUpload() {
-  const [fileName, setFileName] = useState<string>("");
+export default function FileUpload({
+  file,
+  setFile,
+}: {
+  file: File | null;
+  setFile: (file: File | null) => void;
+}) {
+  // const [fileName, setFileName] = useState<string>("");
   const [isDragging, setIsDragging] = useState<boolean>(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const file = e.target.files?.[0];
 
-    if (file) { 
-      setFileName(file.name);
+    if (file) {
+      // setFileName(file.name);
+      setFile(file);
     }
   };
 
@@ -32,12 +39,12 @@ export default function FileUpload() {
     const file = e.dataTransfer.files?.[0];
 
     if (file) {
-      setFileName(file.name);
+      setFile(file);
     }
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <div className="w-full">
       <label
         htmlFor="file-upload"
         className={cn(
@@ -53,7 +60,7 @@ export default function FileUpload() {
         <div className="flex flex-col items-center justify-center pt-5 pb-6">
           <Upload
             className={cn(
-              "w-10 h-10 mb-3",
+              "w-6 h-6 mb-3",
               isDragging ? "text-blue-500" : "text-gray-400",
             )}
           />
@@ -65,11 +72,11 @@ export default function FileUpload() {
             </span>
           </p>
 
-          <p className="text-xs text-gray-400">PDF, DOC, or DOCX</p>
+          {/* <p className="text-xs text-gray-400">PDF, DOC, or DOCX</p> */}
 
-          {fileName && (
+          {file && (
             <p className="mt-2 text-sm text-gray-700 font-medium">
-              Selected: {fileName}
+              Selected: {file.name}
             </p>
           )}
         </div>
@@ -78,7 +85,7 @@ export default function FileUpload() {
           id="file-upload"
           type="file"
           className="hidden"
-          accept=".pdf,.doc,.docx"
+          accept=".pdf"
           onChange={handleFileChange}
         />
       </label>

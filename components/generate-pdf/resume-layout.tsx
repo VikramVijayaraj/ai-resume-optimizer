@@ -8,7 +8,7 @@ const BulletPoint = ({ text }: { text: string }) => (
   </View>
 );
 
-export default function Resume({ data }: { data: any }) {
+export default function ResumeLayout({ data }: { data: any }) {
   if (!data) return null;
 
   return (
@@ -65,7 +65,7 @@ export default function Resume({ data }: { data: any }) {
 
                 {/* Bullets */}
                 <View style={styles.bulletContainer}>
-                  {job.points?.map((point: string, i: number) => (
+                  {job.bullets?.map((point: string, i: number) => (
                     <BulletPoint key={i} text={point} />
                   ))}
                 </View>

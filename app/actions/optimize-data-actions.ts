@@ -6,7 +6,10 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export async function extractData(jobDescription: string, resumeText: string) {
+export async function optimizeDataAction(
+  jobDescription: string,
+  resumeText: string,
+) {
   try {
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
@@ -23,7 +26,7 @@ export async function extractData(jobDescription: string, resumeText: string) {
         {
           role: "user",
           content: `
-            Using the resume content and job description below, rewrite and optimize ONLY the Experience and Skills sections.
+            Using the resume content and job description below, rewrite and optimize ONLY the Summary, Experience and Skills sections.
 
             STRICT RULES:
             - Use ONLY information present in the resume.
@@ -49,6 +52,11 @@ export async function extractData(jobDescription: string, resumeText: string) {
             REQUIRED OUTPUT FORMAT
             ====================
             {
+              "name": "",
+              "email": "",
+              "phone": "",
+              "website": "",
+              "summary": "",
               "experience": [
                 {
                   "role": "",
@@ -57,7 +65,20 @@ export async function extractData(jobDescription: string, resumeText: string) {
                   "bullets": ["...", "..."]
                 }
               ],
-              "skills": ["...", "..."]
+              "skills": ["...", "..."],
+              "education": [
+                {
+                  "degree": "",
+                  "school": "",
+                  "location": "",
+                  "date": ""
+                }
+              ],
+              "remarks": {
+                "optimization_summary": "A brief summary of the optimizations made, such as which keywords were added or which sections were enhanced.",
+                "ats_score_improvement": "An estimate of how much the ATS score may have improved based on keyword optimization, on a scale of 0-100.",
+                "final_ats_score": "An estimate of the final ATS score after optimization, on a scale of 0-100."
+              }
             }
           `,
         },
@@ -66,21 +87,16 @@ export async function extractData(jobDescription: string, resumeText: string) {
       temperature: 0.3,
     });
 
-    const result = JSON.parse(
-      completion.choices[0].message.content || '{"experience":[],"skills":[]}',
-    );
+    const result = JSON.parse(completion.choices[0].message.content || "{}");
 
     return {
-      experience: Array.isArray(result.experience) ? result.experience : [],
-      skills: Array.isArray(result.skills) ? result.skills : [],
+      ...result,
       error: null,
     };
   } catch (error) {
     console.error("Error extracting data:", error);
 
     return {
-      experience: [],
-      skills: [],
       error: "Failed to extract resume data",
     };
   }

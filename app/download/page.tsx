@@ -1,10 +1,20 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 
-const DownloadPdf = dynamic(() => import("../components/download-pdf"), {
+import { ResumeData } from "@/types/resume";
+
+const Header = dynamic(() => import("@/components/download-page/header"), {
   ssr: false,
 });
+const ResumePreview = dynamic(
+  () => import("@/components/download-page/resume-preview"),
+  {
+    ssr: false,
+  },
+);
 
 const resumeData = {
   name: "M Vikram Vijayaraj",
@@ -61,9 +71,33 @@ const resumeData = {
 };
 
 export default function DownloadPage() {
+  const [data, setData] = useState<ResumeData | null>(
+    resumeData as unknown as ResumeData,
+  );
+  const router = useRouter();
+
+  // useEffect(() => {
+  //   // Retrieve from localStorage
+  //   const savedData = localStorage.getItem("optimizedResumeData");
+
+  //   if (savedData) {
+  //     setData(JSON.parse(savedData));
+  //   } else {
+  //     // Redirect back if no data found
+  //     setData(null);
+  //     router.push("/");
+  //   }
+  // }, []);
+
+  // if (!data) {
+  //   return <div>Loading...</div>;
+  // }
+  console.log("data", data);
+
   return (
-    <div>
-      <DownloadPdf />
+    <div className="max-w-10/12 mx-auto">
+      <Header data={data} />
+      <ResumePreview data={data} />
     </div>
   );
 }

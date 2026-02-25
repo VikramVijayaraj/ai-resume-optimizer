@@ -244,3 +244,13 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@theme {
+  --color-primary: #008080;
+}
+
+@layer components {
+  h1 {
+    @apply text-4xl font-bold;
+  }
+}

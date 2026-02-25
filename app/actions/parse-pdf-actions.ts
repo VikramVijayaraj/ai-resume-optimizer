@@ -2,7 +2,7 @@
 
 import { PDFParse } from "pdf-parse";
 
-export async function parsePdf(file: File) {
+export async function parsePdfAction(file: File) {
   if (!file) {
     return { error: "No file uploaded" };
   }

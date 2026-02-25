@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { LoaderCircle } from "lucide-react";
+import { FileText, LoaderCircle } from "lucide-react";
 
 import { Textarea } from "@/components/ui/textarea";
-import { extractData } from "../actions/extract-data-actions";
 import {
   Field,
   FieldDescription,
@@ -16,9 +15,9 @@ import {
   FieldSet,
 } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { parsePdf } from "../actions/parse-pdf-actions";
 import FileUpload from "./file-upload";
+import { parsePdfAction } from "@/app/actions/parse-pdf-actions";
+import { optimizeDataAction } from "@/app/actions/optimize-data-actions";
 
 export default function JobForm() {
   const [jobDescription, setJobDescription] = useState("");
@@ -28,12 +27,19 @@ export default function JobForm() {
   const router = useRouter();
   // const jobDescription = `We are looking for a skilled software engineer with experience in React, Node.js, and cloud technologies. The ideal candidate should have a strong understanding of web development and be able to work in a fast-paced environment. Experience with AWS or Azure is a plus.`;
 
+  // Clear any previously stored data on component mount
+  useEffect(() => {
+    if (localStorage.getItem("optimizedResumeData")) {
+      localStorage.removeItem("optimizedResumeData");
+    }
+  }, []);
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
 
     // Extract text from uploaded resume and include in the prompt
-    const resumeText = await parsePdf(file!);
+    const resumeText = await parsePdfAction(file!);
 
     if (resumeText.error) {
       alert(resumeText.error);
@@ -42,9 +48,8 @@ export default function JobForm() {
     }
 
     console.log("Extracted Resume Text:", resumeText.text);
-    console.log("Job Description:", jobDescription);
 
-    const result = await extractData(jobDescription, resumeText.text!);
+    const result = await optimizeDataAction(jobDescription, resumeText.text!);
 
     if (result.error) {
       console.error(result.error);
@@ -64,20 +69,23 @@ export default function JobForm() {
     <div>
       <form onSubmit={handleSubmit}>
         <FieldSet>
-          <FieldLegend>AI Resume Optimizer</FieldLegend>
-          <FieldDescription>Update your resume with AI</FieldDescription>
           <FieldGroup>
             <Field>
-              <FieldLabel htmlFor="jobDescription">
+              <FieldLabel
+                htmlFor="jobDescription"
+                className="flex items-center justify-start gap-2"
+              >
+                <FileText size={16} className="opacity-70" />
                 Enter Job Description
               </FieldLabel>
               <Textarea
                 id="jobDescription"
                 name="jobDescription"
-                rows={10}
-                cols={50}
+                placeholder="Paste the job description here..."
+                required
                 value={jobDescription}
                 onChange={(e) => setJobDescription(e.target.value)}
+                className="w-full h-48 bg-gray-50"
               />
               {/* <FieldError>Choose another username.</FieldError> */}
             </Field>
@@ -85,17 +93,28 @@ export default function JobForm() {
 
           {/* User Resume */}
           <FieldGroup>
-            <Input
+            <FieldLabel
+              htmlFor="file"
+              className="flex items-center justify-start gap-2"
+            >
+              <FileText size={16} className="opacity-70" />
+              Your Resume (PDF only)
+            </FieldLabel>
+            {/* <Input
               type="file"
               name="file"
               accept=".pdf"
               required
               onChange={(e) => setFile(e.target.files?.[0] || null)}
-            />
-            {/* <FileUpload /> */}
+            /> */}
+            <FileUpload file={file} setFile={(f) => setFile(f || null)} />
           </FieldGroup>
 
-          <Button disabled={loading} type="submit">
+          <Button
+            disabled={loading}
+            type="submit"
+            className="py-6 text-lg hover:cursor-pointer"
+          >
             {loading ? (
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <LoaderCircle className="animate-spin" />
