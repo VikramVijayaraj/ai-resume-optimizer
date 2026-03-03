@@ -77,7 +77,7 @@ export async function optimizeDataAction(
               "remarks": {
                 "optimization_summary": "A brief summary of the optimizations made, such as which keywords were added or which sections were enhanced.",
                 "ats_score_improvement": "An estimate of how much the ATS score may have improved based on keyword optimization, on a scale of 0-100.",
-                "final_ats_score": "An estimate of the final ATS score after optimization, on a scale of 0-100."
+                "final_ats_score": "An estimate of the final ATS score after optimization, on a scale of 0-100. Give a just a single score without the % sign."
               }
             }
           `,
