@@ -33,6 +33,24 @@ export default function ResumePreview({ data }: { data: any }) {
               </span>
             )}
           </p>
+
+          <div>
+            {data?.remarks?.before_and_after_examples?.map(
+              (example: any, index: number) => (
+                <div key={index} className="mt-2">
+                  <p className="font-semibold">Original:</p>
+                  <p>{example.original}</p>
+                  <p className="font-semibold">Optimized:</p>
+                  <p>{example.optimized}</p>
+                </div>
+              ),
+            )}
+          </div>
+
+          <p>
+            {data?.remarks?.missing_keywords?.join(", ") ||
+              "No missing keywords found."}
+          </p>
         </div>
 
         {/* Card 2 */}
