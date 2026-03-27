@@ -12,6 +12,8 @@ import {
 import ResumeContext from "@/context/resume-context";
 import JobContext from "@/context/job-context";
 
+export const runtime = "nodejs";
+
 export default function Home() {
   const { jobDescription } = useContext(JobContext)!;
   const { resumeText } = useContext(ResumeContext)!;

@@ -1,19 +1,26 @@
 "use server";
 
-import { PDFParse } from "pdf-parse";
+import pdf from "pdf-parse";
+
 
 export async function parsePdfAction(file: File) {
-  if (!file) {
-    return { error: "No file uploaded" };
+  try {
+    if (!file) {
+      return { error: "No file uploaded", text: null };
+    }
+
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    const data = await pdf(buffer);
+
+    return {
+      text: data.text,
+      numPages: data.numpages,
+      error: null,
+    };
+  } catch (error) {
+    console.error("PDF Parse Error:", error);
+    return { error: "Failed to parse PDF", text: null };
   }
-
-  // Convert File to Buffer
-  const arrayBuffer = await file.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
-
-  // Parse PDF
-  const parser = new PDFParse({ data: buffer });
-  const result = await parser.getText();
-
-  return { text: result.text };
 }
