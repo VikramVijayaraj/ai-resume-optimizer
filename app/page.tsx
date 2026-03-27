@@ -12,19 +12,6 @@ import {
 import ResumeContext from "@/context/resume-context";
 import JobContext from "@/context/job-context";
 
-// const keywords = [
-//   "HTML5",
-//   "CSS3",
-//   "JavaScript",
-//   "TypeScript",
-//   "React",
-//   "Responsive Design",
-//   "Git",
-//   "REST APIs",
-//   "Webpack",
-//   "Redux",
-// ];
-
 export default function Home() {
   const { jobDescription } = useContext(JobContext)!;
   const { resumeText } = useContext(ResumeContext)!;
@@ -75,8 +62,8 @@ export default function Home() {
 
   return (
     <div className="max-w-10/12 lg:max-w-6/12 mx-auto">
-      <div className="text-center mb-12">
-        <h1 className="text-5xl">
+      <div className="text-center mb-12 space-y-4">
+        <h1 className="text-4xl lg:text-5xl">
           Tailor your resume <span className="text-primary">instantly</span>
         </h1>
         <p className="text-gray-600 text-lg">

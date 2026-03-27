@@ -8,7 +8,7 @@ import ResumeLayout from "../generate-pdf/resume-layout";
 
 export default function Header({ data }: { data: any }) {
   return (
-    <div className="text-center flex items-center justify-between">
+    <div className="text-center flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-0">
       <div className="flex items-center justify-center gap-2">
         <CircleCheck stroke="#008080" size="30" />
         <h1>Your Resume is Ready!</h1>

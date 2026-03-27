@@ -8,8 +8,8 @@ import ResumeLayout from "../generate-pdf/resume-layout";
 
 export default function ResumePreview({ data }: { data: any }) {
   return (
-    <div className="h-full flex gap-4 items-start justify-between">
-      <div className="w-1/4 space-y-4">
+    <div className="h-full flex flex-col-reverse lg:flex-row gap-4 items-start justify-between">
+      <div className="w-full lg:w-1/4 space-y-4">
         {/* Card 1 */}
         <div className="bg-white rounded-lg p-6 flex flex-col gap-8">
           <p className="text-lg font-semibold uppercase">ATS Analysis</p>
@@ -62,12 +62,12 @@ export default function ResumePreview({ data }: { data: any }) {
         )}
       </div>
 
-      <div className="w-3/4">
+      <div className="w-full lg:w-3/4">
         <PDFViewer
           // width="100%"
           // height="100%"
           // showToolbar={false}
-          className="w-full h-[700px] rounded-lg"
+          className="w-full h-[550px] md:h-[1000px] rounded-lg"
         >
           <ResumeLayout data={data} />
         </PDFViewer>

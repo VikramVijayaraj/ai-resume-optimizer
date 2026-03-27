@@ -33,8 +33,8 @@ export default function KeywordsList({
 
   return (
     <div className="space-y-8">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl">Missing Keywords:</h2>
+      <div className="flex flex-col md:flex-row gap-6 md:gap-0 justify-between items-center">
+        <h2 className="text-2xl font-semibold">Missing Keywords:</h2>
         <div>
           <Button
             variant="outline"
@@ -53,11 +53,11 @@ export default function KeywordsList({
         </div>
       </div>
 
-      <p className="text-sm">
+      <p className="text-sm text-center text-gray-500 md:text-left">
         Select keywords to include in your optimized resume:
       </p>
 
-      <ul className="space-y-2 grid grid-cols-3">
+      <ul className="space-y-2 grid grid-cols-2 md:grid-cols-3">
         {keywords.map((keyword, index) => (
           <li
             key={index}
