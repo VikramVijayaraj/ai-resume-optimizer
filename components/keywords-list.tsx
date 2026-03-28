@@ -13,6 +13,7 @@ export default function KeywordsList({
   onSubmit,
 }: KeywordsListProps) {
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   useEffect(() => {
     console.log(selectedKeywords);
@@ -25,6 +26,12 @@ export default function KeywordsList({
     } else {
       setSelectedKeywords((prev) => [...prev, keyword]);
     }
+  }
+
+  function handleSubmit() {
+    setIsSubmitting(true);
+    onSubmit(selectedKeywords);
+    setIsSubmitting(false);
   }
 
   if (keywords.length === 0) {
@@ -71,10 +78,11 @@ export default function KeywordsList({
 
       <div className="flex justify-end">
         <Button
-          onClick={() => onSubmit(selectedKeywords)}
+          onClick={handleSubmit}
           className="w-full text-lg cursor-pointer"
+          disabled={selectedKeywords.length === 0 || isSubmitting}
         >
-          Submit
+          {isSubmitting ? "Optimizing..." : "Optimize Resume"}
         </Button>
       </div>
     </div>

@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 
 import { ResumeData } from "@/types/resume";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Home } from "lucide-react";
 
 const Header = dynamic(() => import("@/components/download-page/header"), {
   ssr: false,
@@ -93,6 +96,12 @@ export default function DownloadPage() {
 
   return (
     <div className="max-w-10/12 mx-auto space-y-16">
+      <Button variant="outline" asChild>
+        <Link href="/">
+          <Home />
+          Home
+        </Link>
+      </Button>
       <Header data={data} />
       <ResumePreview data={data} />
     </div>

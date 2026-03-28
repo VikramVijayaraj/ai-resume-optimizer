@@ -72,7 +72,7 @@ export async function optimizeDataAction(
 ) {
   try {
     const completion = await openai.chat.completions.create({
-      model: "gpt-5.4",
+      model: "gpt-5.4-mini",
       messages: [
         {
           role: "system",
@@ -152,6 +152,7 @@ export async function optimizeDataAction(
             ====================
             - Include as many provided keywords as possible in the Skills section by replacing or consolidating existing skills.
             - You MAY reorder, or replace skills to better match the keywords.
+            - Remove less relevant skills if necessary to make room for important keywords.
 
             ====================
             EXPERIENCE OPTIMIZATION
